@@ -1,7 +1,9 @@
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-DATABASE_URL = "postgresql://postgres:shree123@localhost:5432/parichay"
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL)
-
-print("Database Connected Successfully")

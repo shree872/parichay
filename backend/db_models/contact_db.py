@@ -6,13 +6,11 @@ class ContactDB(Base):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer)
-
-    name = Column(String)
-    company = Column(String)
-    designation = Column(String)
-
-    phone = Column(String)
-    email = Column(String)
+    name = Column(String, nullable=False)
+    company = Column(String, nullable=False)
+    designation = Column(String, nullable=False)
+    phone = Column(String, nullable=False)
+    email = Column(String, nullable=False)
     website = Column(String)
 
     address = Column(String)
