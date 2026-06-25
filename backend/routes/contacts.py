@@ -1,20 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
-from models.contact import Contact
+from fastapi import HTTPException
+from models.contact import ContactCreate
+from models.contact import ContactResponse
 from database.session import SessionLocal
 from db_models.contact_db import ContactDB
-
+from database.dependencies import get_db
 router = APIRouter()
-
-def get_db():
-    db = SessionLocal()
-
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 @router.get("/contacts")
 def get_contacts(
@@ -26,11 +18,10 @@ def get_contacts(
 
 @router.post("/contacts")
 def create_contact(
-    contact: Contact,
+    contact: ContactCreate,
     db: Session = Depends(get_db)
 ):
     new_contact = ContactDB(
-        id=contact.id,
         user_id=contact.user_id,
         name=contact.name,
         company=contact.company,
@@ -39,7 +30,7 @@ def create_contact(
         email=contact.email,
         website=contact.website,
         address=contact.address,
-        created_at=contact.created_at
+        created_at=datetime.utcnow()
     )
 
     try:
@@ -69,9 +60,10 @@ def update_contact(
     ).first()
 
     if not contact:
-        return {
-            "error": "Contact not found"
-        }
+        raise HTTPException(
+    status_code=404,
+    detail="Contact not found"
+)
 
     try:
         contact.user_id = updated_contact.user_id
