@@ -1,16 +1,22 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
+
 from models.contact import ContactCreate
 from models.contact import ContactResponse
+
 from database.session import SessionLocal
 from db_models.contact_db import ContactDB
 from database.dependencies import get_db
+
+from utils.auth import get_current_user
+
 router = APIRouter()
 
 @router.get("/contacts")
 def get_contacts(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: str = Depends(get_current_user)
 ):
     contacts = db.query(ContactDB).all()
     return contacts
@@ -52,7 +58,7 @@ def create_contact(
 @router.put("/contacts/{contact_id}")
 def update_contact(
     contact_id: int,
-    updated_contact: Contact,
+    updated_contact: ContactCreate,
     db: Session = Depends(get_db)
 ):
     contact = db.query(ContactDB).filter(
