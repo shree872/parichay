@@ -77,16 +77,16 @@ def verify_access_token(token: str):
             algorithms=[ALGORITHM]
         )
 
-        email = payload.get("sub")
+        user_id = payload.get("sub")
 
-        if email is None:
+        if user_id is None:
 
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid token"
             )
 
-        return email
+        return int(user_id)
 
     except JWTError:
 

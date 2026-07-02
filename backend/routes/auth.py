@@ -88,8 +88,8 @@ def login_user(
 
     access_token = create_access_token(
         data={
-            "sub": existing_user.email
-        }
+    "sub": str(existing_user.id)
+}
     )
 
     return {

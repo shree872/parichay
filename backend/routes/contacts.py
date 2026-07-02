@@ -18,17 +18,20 @@ def get_contacts(
     db: Session = Depends(get_db),
     current_user: str = Depends(get_current_user)
 ):
-    contacts = db.query(ContactDB).all()
+    contacts = db.query(ContactDB).filter(
+    ContactDB.user_id == current_user
+).all()
     return contacts
 
 
 @router.post("/contacts")
 def create_contact(
     contact: ContactCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: int = Depends(get_current_user)
 ):
     new_contact = ContactDB(
-        user_id=contact.user_id,
+        user_id=current_user,
         name=contact.name,
         company=contact.company,
         designation=contact.designation,
