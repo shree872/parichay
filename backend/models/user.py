@@ -1,11 +1,6 @@
-from pydantic import BaseModel
-from pydantic import EmailStr
-from datetime import datetime
+from pydantic import BaseModel, EmailStr
 
 
-class User(BaseModel):
-
-    id: int
+class UserRegister(BaseModel):
     email: EmailStr
     password: str
-    created_at: datetime

@@ -2,6 +2,7 @@ from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import DateTime
+from datetime import datetime
 
 from database.base import Base
 
@@ -26,6 +27,7 @@ class UserDB(Base):
     )
 
     created_at = Column(
-        DateTime,
-        nullable=False
-    )
+    DateTime,
+    default=datetime.utcnow,
+    nullable=False
+)

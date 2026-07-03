@@ -10,7 +10,7 @@ from fastapi import HTTPException
 from database.dependencies import get_db
 from database.session import SessionLocal
 
-from models.user import User
+from models.user import UserRegister
 from db_models.user_db import UserDB
 
 from utils.auth import hash_password
@@ -21,7 +21,7 @@ router = APIRouter()
 
 @router.post("/register")
 def register_user(
-    user: User,
+    user: UserRegister,
     db: Session = Depends(get_db)
 ):
 
@@ -30,17 +30,17 @@ def register_user(
     ).first()
 
     if existing_user:
-        return {
-            "error": "Email already exists"
-        }
+     raise HTTPException(
+        status_code=400,
+        detail="Email already exists"
+    )
 
     hashed_password = hash_password(user.password)
+    print("HASHED PASSWORD:", hashed_password)
 
     new_user = UserDB(
-        id=user.id,
-        email=user.email,
-        password=hashed_password,
-        created_at=user.created_at
+    email=user.email,
+    password=hashed_password
     )
 
     try:
@@ -52,11 +52,13 @@ def register_user(
         }
 
     except Exception as e:
-        db.rollback()
 
-        return {
-            "error": str(e)
-        }
+     db.rollback()
+
+    raise HTTPException(
+        status_code=500,
+        detail=str(e)
+    )
 
 @router.post("/login")
 def login_user(
@@ -73,11 +75,15 @@ def login_user(
             status_code=401,
             detail="Invalid email"
         )
+    print("USERNAME:", form_data.username)
+    print("PASSWORD:", form_data.password)
+    print("DB HASH:", existing_user.password)
 
     valid_password = verify_password(
         form_data.password,
         existing_user.password
     )
+    print("VALID PASSWORD:", valid_password)
 
     if not valid_password:
 

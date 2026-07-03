@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
+from datetime import datetime
+
 from models.contact import ContactCreate
 from models.contact import ContactResponse
 
@@ -16,7 +18,7 @@ router = APIRouter()
 @router.get("/contacts")
 def get_contacts(
     db: Session = Depends(get_db),
-    current_user: str = Depends(get_current_user)
+    current_user: int = Depends(get_current_user)
 ):
     contacts = db.query(ContactDB).filter(
     ContactDB.user_id == current_user
@@ -31,16 +33,15 @@ def create_contact(
     current_user: int = Depends(get_current_user)
 ):
     new_contact = ContactDB(
-        user_id=current_user,
-        name=contact.name,
-        company=contact.company,
-        designation=contact.designation,
-        phone=contact.phone,
-        email=contact.email,
-        website=contact.website,
-        address=contact.address,
-        created_at=datetime.utcnow()
-    )
+    name=contact.name,
+    company=contact.company,
+    designation=contact.designation,
+    phone=contact.phone,
+    email=contact.email,
+    website=contact.website,
+    address=contact.address,
+    created_at=datetime.utcnow()
+)
 
     try:
         db.add(new_contact)
