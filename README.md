@@ -1,7 +1,7 @@
 # Parichay — Digital Business Card App (MVP)
 
-An original implementation of a digital business card & networking app
-(same feature category as Azlogics' Parichay on Google Play), built with:
+An implementation of an existing digital business card & networking app
+called Azlogics' Parichay on Google Play, built with:
 
 - **Backend:** FastAPI + PostgreSQL + SQLAlchemy 2.0, JWT auth
 - **Frontend:** React Native + Expo (Router, Paper, React Query, RHF, Reanimated)
