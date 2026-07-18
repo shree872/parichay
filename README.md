@@ -1,4 +1,4 @@
-# Parichay — Digital Business Card App (MVP)
+# Parichay ~ Digital Business Card App (MVP)
 
 An implementation of an existing digital business card & networking app
 called Azlogics' Parichay on Google Play, built with:
