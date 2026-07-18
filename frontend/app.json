@@ -1,0 +1,57 @@
+{
+  "expo": {
+    "name": "Parichay",
+    "slug": "parichay",
+    "version": "1.0.0",
+    "scheme": "parichay",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.parichay.app"
+    },
+    "android": {
+      "package": "com.parichay.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#4338CA",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Parichay uses your camera to scan QR codes and business cards."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Parichay uses your photo library to set your profile picture and attach card photos."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "apiBaseUrl": "http://localhost:8000/api/v1"
+    }
+  }
+}
